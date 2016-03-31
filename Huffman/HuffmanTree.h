@@ -11,26 +11,65 @@ using namespace std;
 class TreeNode
 {
 	friend class BinaryTree;
-
+	friend class CompareTreeNode;
+	friend ostream& operator<<(ostream&, const TreeNode&);
 private:
 	TreeNode *rightPtr, *leftPtr;
+	TreeNode *root; // pointer to the root
 	char data; // This will a letter 
-	int freqency; // the freqency of the letter.
+	int frequency; // the frequency of the letter.
+
+public:
+	TreeNode();
+	TreeNode(char letter, int times);
+	TreeNode(TreeNode *lft, TreeNode *rgt, TreeNode *parent);
+	TreeNode(const TreeNode&); // copy Constructor
+	~TreeNode(); //Destructor
+
+};
+
+class CompareTreeNode {
+public:
+	bool operator()(TreeNode &node1, TreeNode &node2);
 };
 
 
 class BinaryTree
 {
 private:
+	int heapSize;
+	string message, code;
+	ofstream decodedMessage;
+	map<char, int> frequencyMap; // char is letter, int is frequency
 	TreeNode *root;
-	ofstream decodeMessage;
-	map<char, int>frequencyMap; // Letters(char) are key & count (int) is how often it happens
-	map<char, string>huffmanMap; // Letters(char) are key & positon(string) is where in tree is'
-	void preOrderTraversal(TreeNode *subtree, string huffmanCode); // recursive method. huffmanCode is direction
-	//void inOrderTraversal(TreeNode *subtree); // recursive method
-	//void postOrderTraversal(TreeNode *subtree);
-
+	priority_queue<TreeNode, vector<TreeNode>, CompareTreeNode> heap;
+	map<char, string> huffMap; // contains codes for each letter in tree
+	void huffmanEncoding(TreeNode *ptr, string direction);
 
 public:
-	void preOrderTraversal();
+	void getSourceMessage(); // reading the txt file
+	void frequencyTable(); // get the frequency of the letter
+	void displayFreqTable(); // put in a Huffman Class?.
+	void buildHeap(); //  FINISHED ?
+	void huffmanEncoding();
+	void displayHuffmanTable(); // Display letters as 0s & 1s
+
 };
+
+// Putting some of BinaryTree into make sense? Maybe clean it up.
+
+/*
+class HuffmanCode
+{
+friend class BinaryTree;
+private:
+//int heapSize;
+string message, code;
+ofstream decodedMessage;
+map<char, int> frequencyMap; // char is letter, int is frequency
+BinaryTree *root;
+priority_queue<TreeNode, vector<TreeNode>, CompareTreeNode> heap;
+public:
+
+};
+*/

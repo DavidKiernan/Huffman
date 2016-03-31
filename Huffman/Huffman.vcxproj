@@ -122,6 +122,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HuffmanTree.cpp" />
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="HuffmanOriginal.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
