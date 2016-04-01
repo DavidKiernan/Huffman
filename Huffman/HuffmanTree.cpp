@@ -1,5 +1,6 @@
 #include "HuffmanTree.h"
 #include<sstream>
+#include <bitset>
 
 
 TreeNode::TreeNode()
@@ -13,33 +14,45 @@ TreeNode::TreeNode(char letter, int times)
 {
 	data = letter;
 	frequency = times;
-	leftPtr = rightPtr = root = NULL;
+	leftPtr = rightPtr = NULL;
 }
 
-TreeNode::TreeNode(TreeNode * lft, TreeNode * rgt, TreeNode * parent)
+TreeNode::TreeNode(TreeNode * lft, TreeNode * rgt)
 {
 	data = NULL;
-	root = parent;
 	leftPtr = lft;
 	rightPtr = rgt;
 	frequency = lft->frequency + rgt->frequency;
 }
 
-TreeNode::TreeNode(const TreeNode &rhs)
+TreeNode::TreeNode(TreeNode * node)
 {
-	if (rhs.leftPtr != NULL) {
-		leftPtr = new TreeNode();
-		leftPtr = rhs.leftPtr;
+	data = node->data;
+	frequency = node->frequency;
+	if (node->leftPtr != nullptr) {
+		leftPtr = node->leftPtr;
 	}
-	if (rhs.rightPtr != NULL) {
-		rightPtr = new TreeNode();
-		rightPtr = rhs.rightPtr;
+	if (node->rightPtr != nullptr) {
+		rightPtr = node->rightPtr;
 	}
-	data = rhs.data;
-	frequency = rhs.frequency;
-	root = rhs.root;
 }
 
+/*
+TreeNode::TreeNode(const TreeNode &rhs)
+{
+if (rhs.leftPtr != NULL) {
+leftPtr = new TreeNode();
+leftPtr = rhs.leftPtr;
+}
+if (rhs.rightPtr != NULL) {
+rightPtr = new TreeNode();
+rightPtr = rhs.rightPtr;
+}
+data = rhs.data;
+frequency = rhs.frequency;
+root = rhs.root;
+}
+*/
 TreeNode::~TreeNode()
 {
 	while (root) {
@@ -56,9 +69,10 @@ ostream& operator<<(ostream& os, const TreeNode& rhs) {
 	return os;
 }
 
-bool CompareTreeNode::operator()(TreeNode & node1, TreeNode & node2)
+// Using & instead of a pointer 
+bool CompareTreeNode::operator()(TreeNode *node1, TreeNode *node2)
 {
-	if (node1.frequency > node2.frequency)
+	if (node1->frequency > node2->frequency)
 	{
 		return true;
 	}
@@ -71,21 +85,24 @@ bool CompareTreeNode::operator()(TreeNode & node1, TreeNode & node2)
 
 void BinaryTree::huffmanEncoding(TreeNode * ptr, string direction)
 {
-	// PreOrderTraversal
-	if (ptr != NULL)
+	// Improved on 
+	if (!ptr) // empty tree root is Null
 	{
-		if (ptr->data == NULL) {
-
-			huffmanEncoding(ptr->leftPtr, direction + "0");
-			huffmanEncoding(ptr->rightPtr, direction + "1");
+		cout << "Empty Tree" << endl;
+	}
+	else
+	{
+		if (ptr->data == NULL)
+		{
+			huffmanEncoding(ptr->leftPtr, direction + '0');
+			huffmanEncoding(ptr->leftPtr, direction + '1');
 		}
 		else
 		{
-			huffMap.insert(pair<char, string>(ptr->data, direction));
+			huffMap.insert(pair<char, std::string>(ptr->data, direction));
+
 		}
-
 	}
-
 }
 
 void BinaryTree::getSourceMessage()
@@ -101,7 +118,7 @@ void BinaryTree::getSourceMessage()
 
 void BinaryTree::frequencyTable()
 {
-	for ( int i = 0; i < message.length(); i++)
+	for (int i = 0; i < message.length(); i++)
 	{
 		// letter not found add it with frequency of one
 		if (frequencyMap.find(message[i]) == frequencyMap.end())
@@ -131,43 +148,38 @@ void BinaryTree::displayFreqTable()
 
 void BinaryTree::buildHeap()
 {
-	// takes everything from frequency table to priority queue
-	map<char, int> ::iterator p;
-	for (p = frequencyMap.begin(); p != frequencyMap.end(); p++)
+	// Populate the priority queue
+	map<char, int> ::iterator pQ;
+	for (pQ = frequencyMap.begin(); pQ != frequencyMap.end(); pQ++)
 	{
-		TreeNode *newNode = new TreeNode(p->first, p->second);
-		heap.push(*newNode);
+		heap.emplace(new TreeNode(pQ->first, pQ->second)); // push new anonymous node into the priority queue
 	}
-	// Pop off 2 at a time until 1 left
 
-	while (heap.size() != 0)
+	// build the Huffman tree
+	// Note: George told me about the emplace();
+	while (heap.size() != 1)
 	{
-		if (heap.size() == 1) break;
-		TreeNode *lft = new TreeNode(heap.top());
+		TreeNode *leftSide = new TreeNode(heap.top());// store the top node from the heap
+		heap.pop(); // pop off the top node from the heap (the one above)
+		TreeNode *rightSide = new TreeNode(heap.top());
 		heap.pop();
-		TreeNode *rgt = new TreeNode(heap.top());
-		heap.pop();
-		TreeNode *newInsert = new TreeNode(lft, rgt, root);
-		heap.push(*newInsert);
+		TreeNode *newNodeInsert = new TreeNode(leftSide, rightSide);
+		heap.emplace(newNodeInsert);  // push new node (tree), and add up the frequency (populated in PQ based on frequency)
 	}
+	root = heap.top(); // ref(set) the last node as the root
+	heap.pop(); // pop off the tree from the priority queue
 }
 
 void BinaryTree::huffmanEncoding()
 {
-	if (!root) {
-		cout << "Tree is empty" << endl;
-	}
-	else {
-		huffmanEncoding(root, "");
-		//displayHuffmanTable();
-	}
+	huffmanEncoding(root, "");
 }
 
 void BinaryTree::displayHuffmanTable()
 {
 	cout << "Huffman Table:" << endl;
 	for (map<char, string>::iterator it = huffMap.begin();
-	it != huffMap.end(); ++it) {
+	it != huffMap.end(); it++) {
 		cout << it->first << "\t" << it->second << endl;
 	}
 }

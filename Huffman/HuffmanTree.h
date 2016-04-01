@@ -22,27 +22,29 @@ private:
 public:
 	TreeNode();
 	TreeNode(char letter, int times);
-	TreeNode(TreeNode *lft, TreeNode *rgt, TreeNode *parent);
-	TreeNode(const TreeNode&); // copy Constructor
+	TreeNode(TreeNode *lft, TreeNode *rgt); // Maybe Taking the Parent out will allow it to work
+	TreeNode(TreeNode *node); // Missing this to make work? As its not a const
+							  //TreeNode(const TreeNode&); // copy Constructor
 	~TreeNode(); //Destructor
 
 };
 
 class CompareTreeNode {
+	friend class BinaryTree;
 public:
-	bool operator()(TreeNode &node1, TreeNode &node2);
+	bool operator()(TreeNode *node1, TreeNode *node2);
 };
 
 
 class BinaryTree
 {
 private:
-	int heapSize;
+	int padding;
 	string message, code;
 	ofstream decodedMessage;
 	map<char, int> frequencyMap; // char is letter, int is frequency
-	TreeNode *root;
-	priority_queue<TreeNode, vector<TreeNode>, CompareTreeNode> heap;
+	TreeNode *root = nullptr;// the tree "hangs" off of this root  http://stackoverflow.com/questions/16111337/declaring-a-priority-queue-in-c-with-a-custom-comparator
+	priority_queue<TreeNode, vector<TreeNode*>, CompareTreeNode> heap; // http://stackoverflow.com/questions/15646780/priority-queue-of-nodes
 	map<char, string> huffMap; // contains codes for each letter in tree
 	void huffmanEncoding(TreeNode *ptr, string direction);
 

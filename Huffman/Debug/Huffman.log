@@ -1,17 +1,18 @@
-﻿Build started 31/03/2016 15:47:54.
+﻿Build started 01/04/2016 18:02:55.
      1>Project "G:\College\Semster 6\Algorithms & Data Structure\Huffman\Huffman\Huffman.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt HuffmanTree.cpp Source.cpp
          Source.cpp
          HuffmanTree.cpp
-     1>g:\college\semster 6\algorithms & data structure\huffman\huffman\huffmantree.cpp(104): warning C4018: '<': signed/unsigned mismatch
+     1>g:\college\semster 6\algorithms & data structure\huffman\huffman\huffmantree.cpp(121): warning C4018: '<': signed/unsigned mismatch
          Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\College\Semster 6\Algorithms & Data Structure\Huffman\Debug\Huffman.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"G:\College\Semster 6\Algorithms & Data Structure\Huffman\Debug\Huffman.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\College\Semster 6\Algorithms & Data Structure\Huffman\Debug\Huffman.lib" /MACHINE:X86 Debug\HuffmanTree.obj
          Debug\Source.obj
+         LINK : G:\College\Semster 6\Algorithms & Data Structure\Huffman\Debug\Huffman.exe not found or not built by the last incremental link; performing full link
          Huffman.vcxproj -> G:\College\Semster 6\Algorithms & Data Structure\Huffman\Debug\Huffman.exe
      1>Done Building Project "G:\College\Semster 6\Algorithms & Data Structure\Huffman\Huffman\Huffman.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:46.19
+Time Elapsed 00:00:28.08
