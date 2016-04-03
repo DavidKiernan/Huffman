@@ -49,7 +49,7 @@ private:
 	void huffmanEncoding(TreeNode *ptr, string direction);
 
 public:
-	void getSourceMessage(); // reading the txt file
+	void getSourceMessage(string fileIn); // reading the txt file
 	void frequencyTable(); // get the frequency of the letter
 	void displayFreqTable(); // put in a Huffman Class?.
 	void buildHeap(); //  FINISHED ?

@@ -10,7 +10,7 @@ int main()
 {
 	// Maybe put all this into a single method. could be neater.
 	BinaryTree test;
-	test.getSourceMessage(); // This works.
+	test.getSourceMessage("HuffmanOriginal.txt"); // This works.
 	test.frequencyTable(); // This works. Can improve?
 	test.displayFreqTable(); // This works. Can improve?
 	test.buildHeap(); // Think it works

@@ -95,7 +95,7 @@ void BinaryTree::huffmanEncoding(TreeNode * ptr, string direction)
 		if (ptr->data == NULL)
 		{
 			huffmanEncoding(ptr->leftPtr, direction + '0');
-			huffmanEncoding(ptr->leftPtr, direction + '1');
+			huffmanEncoding(ptr->rightPtr, direction + '1');
 		}
 		else
 		{
@@ -105,13 +105,23 @@ void BinaryTree::huffmanEncoding(TreeNode * ptr, string direction)
 	}
 }
 
-void BinaryTree::getSourceMessage()
+void BinaryTree::getSourceMessage(string fileIn)
 {
 	// reads the txt file. Maybe allow user input?
-	ifstream originalMessage("HuffmanOriginal.txt");
+	
+	ifstream originalMessage(fileIn);
 	// while there is a line available get it.
-	while (getline(originalMessage, message)) {
-		cout << "Original Message " << endl << "-----------------------" << endl << message << endl << endl;
+	if (originalMessage.is_open()) {
+		while (originalMessage)
+		{
+			getline(originalMessage, message);
+
+		}
+		cout << "Original Message " << endl << "-----------------------" << endl << message << endl;
+	}
+	else
+	{
+		cout << "File Not Found" << endl;
 	}
 	originalMessage.close(); // close the ifstream
 }
@@ -136,6 +146,8 @@ void BinaryTree::frequencyTable()
 void BinaryTree::displayFreqTable()
 {
 	// test data went into freq map
+	// Frequency of the tree is 26.
+	// Frequency of the tree verified at www.algorasim.com
 	map<char, int> ::iterator p;
 
 	cout << "Test Freq Map" << endl << "----------------------- " << endl;
