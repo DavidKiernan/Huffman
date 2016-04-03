@@ -8,15 +8,17 @@ using namespace std;
 
 int main()
 {
+
 	// Maybe put all this into a single method. could be neater.
-	BinaryTree test;
-	test.getSourceMessage("HuffmanOriginal.txt"); // This works.
+	HuffmanTree test;
+	//test.readFile("HuffmanOriginal.txt"); // This works.
+	cout << test.readFile("HuffmanOriginal.txt") << "\n" << endl;
 	test.frequencyTable(); // This works. Can improve?
 	test.displayFreqTable(); // This works. Can improve?
-	test.buildHeap(); // Think it works
+	test.buildHeap(); // Works 
 	test.huffmanEncoding(); // Empty table get help to fix.
-	test.displayHuffmanTable();
-
+	test.writeHuffCodeToFile();
+	test.decodeHuffFile();
 	system("pause");
 	return 0;
 }

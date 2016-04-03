@@ -119,9 +119,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="HuffmanTree.h" />
+    <ClInclude Include="HuffmanTreeNode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HuffmanTree.cpp" />
+    <ClCompile Include="HuffmanTreeNode.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
