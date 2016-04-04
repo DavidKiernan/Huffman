@@ -1,3 +1,8 @@
+/*
+David Kiernan x00093830
+4th April 2016
+3rd year Huffman CA
+*/
 #pragma once
 using namespace std;
 
@@ -16,8 +21,7 @@ public:
 	TreeNode();
 	TreeNode(char letter, int times);
 	TreeNode(TreeNode *lft, TreeNode *rgt); // Maybe Taking the Parent out will allow it to work
-	TreeNode(TreeNode *node); // Missing this to make work? As its not a const
-	//TreeNode(const TreeNode&); // copy Constructor
+	TreeNode(TreeNode *node); 
 	~TreeNode(); //Destructor
 
 };

@@ -1,3 +1,8 @@
+/*
+David Kiernan x00093830
+4th April 2016
+3rd year Huffman CA
+*/
 #pragma once
 #include "HuffmanTreeNode.h"
 #include <string>
@@ -7,7 +12,7 @@
 class HuffmanTree
 {
 private:
-	int padding; // this for padding the huffman code with 0s to make up equal sized chunks of 8 bits
+	int padding=0; // this for padding the huffman code with 0s to make up equal sized chunks of 8 bits
 	string message, code;
 	//ofstream decodedMessage; // May not need?
 	map<char, int> frequencyMap; // char is letter, int is frequency
@@ -28,5 +33,6 @@ public:
 	void writeHuffCodeToFile();
 	void decodeHuffFile();
 	string huffDecode(string codeIn);
-
+	void compressHuffFile(); // adds the padding
+	void decompressHuffFile(); // get rid of the padding
 };

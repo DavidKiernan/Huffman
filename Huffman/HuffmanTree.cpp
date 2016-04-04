@@ -1,7 +1,23 @@
+/*
+David Kiernan x00093830
+4th April 2016
+3rd year Huffman CA
+*/
 #include "HuffmanTree.h"
 #include <iostream>
 #include <sstream>
 #include <bitset>
+
+/***************************************************************************************
+*    Title: An In - Depth Look At Huffman Encoding
+*    Author : KYA
+*    Date : 21 / 03 / 2016
+* Code version : N / A
+*    Availability : http ://www.dreamincode.net/forums/blog/324/entry-3150-an-in-depth-look-at-huffman-encoding/
+***************************************************************************************/
+// Lecture notes, specifically huffman.ppt used for guidance
+// cplusplus and StackOverflow
+
 void HuffmanTree::huffmanEncoding(TreeNode * ptr, string direction)
 {
 	// Improved on 
@@ -58,7 +74,7 @@ void HuffmanTree::writeToFile(string textInput, string fileToWrite)
 
 void HuffmanTree::frequencyTable()
 {
-	for (int i = 0; i < message.length(); i++)
+	for (unsigned i = 0; i < message.length(); i++)
 	{
 		// letter not found add it with frequency of one
 		if (frequencyMap.find(message[i]) == frequencyMap.end())
@@ -99,11 +115,10 @@ void HuffmanTree::buildHeap()
 														   //cout << pQ->first << " " << pQ->second << endl;
 	}
 	// build the Huffman tree
-	// Note: George told me about the emplace();
 	while (heap.size() != 1)
 	{
 		TreeNode *leftSide = new TreeNode(heap.top());// store the top node from the heap
-													  //cout << heap.top()->data << " " << heap.top()->frequency << endl;
+		 //cout << heap.top()->data << " " << heap.top()->frequency << endl;
 		heap.pop(); // pop off the top node from the heap (the one above)
 		TreeNode *rightSide = new TreeNode(heap.top());
 		//cout << heap.top()->data << " " << heap.top()->frequency << endl;
@@ -138,11 +153,12 @@ void HuffmanTree::writeHuffCodeToFile()
 {
 
 	// take the input text (The one in main), loop through it, find respective Huffman code in the map and add to the string
-	for (int i = 0; i < message.size(); i++) {
+	for (unsigned i = 0; i < message.size(); i++) {
 		code += huffMap.find(message[i])->second;
 
 	}
 	writeToFile(code, "huffmanCode.txt");
+	cout << "Size is: " << code.size() << "\n" << endl;
 }
 
 void HuffmanTree::decodeHuffFile()
@@ -183,5 +199,84 @@ string HuffmanTree::huffDecode(string codeIn)
 		}
 	}
 	return decodedHuffman;
+}
+
+void HuffmanTree::compressHuffFile()
+{
+	cout << "Huffman Compressed to ASCII \n" << endl;
+
+	/* pad the code until equal 8 bit chunks so cpu can read it.
+	use mod 8 when this is equal to 0 exit out
+	*/
+
+	while (code.size() % 8 != 0)
+	{
+		code.append("0");
+		padding++;
+	}
+
+	string codeToCompress;
+	bitset<8> byte; // http://www.cplusplus.com/reference/bitset/bitset/
+	stringstream strStream(code); // http://www.cplusplus.com/reference/sstream/stringstream/ && http://www.cplusplus.com/reference/sstream/stringstream/stringstream/
+
+								  // These varaibles are thanks to george.
+
+	bool innerControl = true;
+	int i = 0; // this and the inner while loop is for the output of bit codes in 8 bit chunks
+
+	cout << "Character" << "   " << "ASCII " << endl;
+	// this would add incorrect character at the end without the additional padding
+	while (strStream)
+	{
+		strStream >> byte;
+		// byte.to_ulong return an unsigned long with int value of 8
+		// more information available from:
+		// http://www.cplusplus.com/reference/bitset/bitset/to_ulong/
+		char letter = char(byte.to_ulong());
+		codeToCompress += letter;
+
+		cout << letter << "           ";
+
+		/***************************************************************************************
+		*    Author : George
+		*    Date : 1st April 2016
+		*	 Based On
+		*    Availability : George
+		*	couldn't print to screen. This was all I needed two lines
+		**************************************************************************************/
+		// http://www.cplusplus.com/reference/string/string/substr/
+		cout << code.substr(i, 8) << endl;
+		i += 8;
+	}
+	codeToCompress.pop_back(); // this is to cut off the extra NUL (\0) at the end (Tip for whoever comes by this CA - Notepad++ points out NULs in text files)
+
+							   // writing the compress code to a file.
+	writeToFile(codeToCompress, "CompressedText.txt");
+	cout << "Output to file: " << codeToCompress << endl << endl;
+}
+
+void HuffmanTree::decompressHuffFile()
+{
+	string inputFile = readFile("CompressedText.txt");
+	string decompressedText;
+	bitset<8> byte;
+
+	for (unsigned int i = 0; i < inputFile.size(); i++)
+	{
+		byte = inputFile[i];
+		// convert byte bitset to string and append to the left string
+		decompressedText += byte.to_string();
+	}
+
+	cout << "Size with padding " << decompressedText.size() << "\nSize without padding " << (decompressedText.size() - padding) << endl;
+	cout << "Binary value 30 bits long \n" << endl;
+	for (unsigned int i = 0; i < decompressedText.length(); i += 30)
+	{
+		cout << " " << decompressedText.substr(i, 30) << endl;
+	}
+
+	// Showing that the message has decoded to original code
+	cout << "\nDecoded Message \n" << endl;
+	cout << huffDecode(decompressedText) << "\n" << endl;
 }
 

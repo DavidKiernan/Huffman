@@ -1,3 +1,8 @@
+/*
+David Kiernan x00093830
+4th April 2016
+3rd year Huffman CA
+*/
 #include "HuffmanTreeNode.h"
 #include<sstream>
 #include <bitset>
@@ -37,22 +42,7 @@ TreeNode::TreeNode(TreeNode * node)
 	}
 }
 
-/*
-TreeNode::TreeNode(const TreeNode &rhs)
-{
-if (rhs.leftPtr != NULL) {
-leftPtr = new TreeNode();
-leftPtr = rhs.leftPtr;
-}
-if (rhs.rightPtr != NULL) {
-rightPtr = new TreeNode();
-rightPtr = rhs.rightPtr;
-}
-data = rhs.data;
-frequency = rhs.frequency;
-root = rhs.root;
-}
-*/
+
 TreeNode::~TreeNode()
 {
 	while (root) {
