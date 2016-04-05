@@ -120,14 +120,17 @@
   <ItemGroup>
     <ClInclude Include="HuffmanTree.h" />
     <ClInclude Include="HuffmanTreeNode.h" />
+    <ClInclude Include="ROT13Encryption.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HuffmanTree.cpp" />
     <ClCompile Include="HuffmanTreeNode.cpp" />
+    <ClCompile Include="ROT13Encryption.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="HuffmanOriginal.txt" />
+    <Text Include="Poem.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

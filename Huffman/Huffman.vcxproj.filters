@@ -21,6 +21,9 @@
     <ClInclude Include="HuffmanTreeNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ROT13Encryption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HuffmanTree.cpp">
@@ -32,9 +35,15 @@
     <ClCompile Include="HuffmanTreeNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ROT13Encryption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="HuffmanOriginal.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="Poem.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
